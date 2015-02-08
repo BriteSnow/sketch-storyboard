@@ -1,14 +1,23 @@
 ### About
 
-Story Exporter is a Ketch 3.2.2+ plugin that exports a Sketch file to a set of story like .pngs and with their eventual annotation variant. Perfect to export in one shortcut a full actionable story flow and dev specification. 
+Story Exporter is a Sketch plugin which turns a sketch file into an actionable story flow and dev specification as a set of well organized .png files. Just follow the naming convention and Story Exporter will generate the multiple png output for in a clean and ordered way.
+
+## Install
+
+- Download and Unzip [sketch-storexporter-master.zip](https://github.com/BriteSnow/sketch-storyexporter/archive/master.zip)
+- rename the unzipped folder to "Story Exporter"
+- Move the "Store Exporter" into the Sketch Plugins folder (To find your Sketch folder, in Sketch menu, go to: "Plugins > Reveal Plugins Folder...")
+- Now, in Sketch, you should see "Plugins > Story Exporter > 0. Story Export"
+
 
 ### Concept
 
 - Naming convention is designed to alphabatically ordered. 
-- Artboards are the main screen or "story layer", and can have sub "story layers" (each will be exported in separate pngs files)
-- "story layers" are named with the following format 01-A-.... so, [two digits]-[one upercase letter]-[any name]
-- The top "story layer" (i.e. the artboard one) can have a special "_grid_" layer that will be exported in a separate "...-grid-...png" file and with all the eventual "overlay" screens. 
-- Any "story layer" can have a one or more "overlay layers" that starts and end by "-" (e.g., -annotations-) which will also result in a separate png with the parent story layer active (it will get hidden for the other export)
+- Artboards are the main screens or "top story layer", and can have sub "story layers" (each will be exported in separate pngs files)
+- Each "story layer" will result in at least one png. Sub story layers will be hidden, and shown one by one before export.
+- "story layers" are named with the following format "01-A-Any Name" so, [two digits]-[one upercase letter]-[any name]
+- The "top story layer" (i.e. the artboard one) can have a special "_grid_" layer, which if present, will be exported in a separate "...-grid-...png" file and with all the eventual "overlay layers". 
+- Any "story layer" can have a zero or more "overlay layers" that starts and end by "-" (e.g., -annotations-) which will also result in a separate png with the parent story layer active (it will get hidden for the other export)
 
 ### Example
 
@@ -40,17 +49,12 @@ The default story files (all variant layers are hidden as well as the ```_grid_`
 - taskmanager-spec-03-A-ProjectView.png
 - taskmanager-spec-03-B-AddTicket.png
 
-Then, the ...-grid-... version is exproted for the 02-... because the 02-A- artboard as the ```_grid_```
-- taskmanager-spec-grid-02-A-ProjectList.png (this is because we had the special ```_grid_```)
-- taskmanager-spec-grid-02-B-AddProject.png (this is because we had the special ```_grid_```)
+Then, since the 03-A-ProjectList artboard has the special ```_grid_``` layer, a "...-grid-..."" version of all the story layers for this artboard are exported as well. 
+- taskmanager-spec-grid-02-A-ProjectList.png
+- taskmanager-spec-grid-02-B-AddProject.png 
 
-and finally, the 03-A... and 03-B have some "overlay layers"
-- taskmanager-spec-overlay-03-A-ProjectView.png (because we got the -overlay- as children of 03-A-ProjectView)
-- taskmanager-spec-annotations-03-B-AddTicket.png (because we have the "-annotations-" as direct children of 03-B...)
+and finally, the story layers "03-A-ProjectView" and "03-B-AddTicket" has each an "overlay layer" name "-annotations-" and "-overlay-" respetively, which will result in the export of these two additional files: 
+- taskmanager-spec-overlay-03-A-ProjectView.png (contains the -overlay- layer)
+- taskmanager-spec-annotations-03-B-AddTicket.png (contains the "-annotations-")
 
 
-## Install
-
-- Find your Sketch folder by going to: "Plugins > Reveal Plugins Folder..."
-- Copy this folder to this "Plugins"
-    + You can 
