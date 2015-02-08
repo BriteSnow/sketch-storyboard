@@ -1,0 +1,5 @@
+{
+    "name": "Story Exporter",
+    "description": "Exporting a .sketch file into a story flow and its overlay pngs.",
+    "tags": ["story", "agile", "export", "design specs", "dev", "development"]
+}

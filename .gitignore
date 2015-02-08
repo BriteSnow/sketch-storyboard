@@ -1,0 +1,9 @@
+# Mac stuff, ignore
+.DS_Store
+
+# Distribution folder
+dist/
+
+# Ignore sublime text files
+*.sublime-project
+*.sublime-workspace

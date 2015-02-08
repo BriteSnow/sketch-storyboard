@@ -1,0 +1,102 @@
+// jshint ignore: start
+#import 'utils.js'
+
+log("--");
+log("0. Story Export " + [@"~/" stringByExpandingTildeInPath]);
+
+var artboards = getArtboards();
+
+exportAllStories();
+
+// for (var i = 0; i < 3; i++){
+// 	test();
+// }
+// 	var a = artboards[0];
+// 	var storyLayers = getStoryLayers(a); 
+// 	storyLayers.forEach(function(val){
+// 		log("" + i + " " + val.name())
+// 		getVariantLayers(val);
+// 	})	
+// }
+// log("END!")
+
+function exportAllStories(){
+	var fileDisplayName = [doc displayName];
+	var currentFilePath = [[doc fileURL] path];
+	var fileFolder = currentFilePath.split(fileDisplayName)[0];
+	var fileName = fileDisplayName.substring(0, fileDisplayName.indexOf("."));
+
+	var pickedFolderPath = pickFolder();
+	if (pickedFolderPath){
+		var baseFilePath = pickedFolderPath + fileName + "-";
+
+		getArtboards().forEach(function(artboard){
+			exportArtboardStories(artboard,baseFilePath);	
+		});
+	}
+}
+
+
+function exportArtboardStories(artboard,baseFilePath){
+	var storyLayers = getStoryLayers(artboard); 
+
+	// Hide all story layers
+	storyLayers.forEach(function(val){
+		val.setIsVisible(false);
+	});
+
+	// export the first artboard
+	exportArtboardPngs(artboard,artboard,baseFilePath);
+
+	storyLayers.forEach(function(layer){
+		layer.setIsVisible(true);
+		exportArtboardPngs(artboard,layer,baseFilePath);
+		layer.setIsVisible(false);		
+	});
+
+}
+
+function exportArtboardPngs(artboard, parent, baseFilePath){
+
+	var gridLayer = getGridLayer(artboard);
+	if (gridLayer){
+		gridLayer.setIsVisible(false);
+	}
+
+	// first hide all variant layers
+	var variantLayers = getVariantLayers(parent)
+	variantLayers.forEach(function(variantLayer){
+		variantLayer.setIsVisible(false);
+	});
+
+	// export the base
+	var fullPath = baseFilePath + parent.name() + ".png";
+	saveArtboard(artboard,fullPath);
+
+	if (gridLayer){
+		gridLayer.setIsVisible(true);
+	}
+
+	// if we do not have variant layers, export the grid
+	if (variantLayers.length == 0){
+		if (gridLayer){
+			fullPath = baseFilePath + "grid-" + parent.name() + ".png";
+			saveArtboard(artboard,fullPath);
+		}
+	}else{
+		// export the variants
+		var name;
+		variantLayers.forEach(function(variantLayer){
+			variantLayer.setIsVisible(true);
+			name = variantLayer.name().substring(1);
+			fullPath = baseFilePath + name + parent.name() + ".png";
+			saveArtboard(artboard,fullPath);
+			variantLayer.setIsVisible(false);
+		});
+	}
+
+	if (gridLayer){
+		gridLayer.setIsVisible(false);
+	}
+
+}
