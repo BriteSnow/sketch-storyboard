@@ -2,7 +2,7 @@
 #import 'utils.js'
 
 log("--");
-log("0. Story Export " + [@"~/" stringByExpandingTildeInPath]);
+log("1. Export Story " + [@"~/" stringByExpandingTildeInPath]);
 
 var artboards = getArtboards();
 
@@ -26,7 +26,7 @@ function exportAllStories(){
 	var fileFolder = currentFilePath.split(fileDisplayName)[0];
 	var fileName = fileDisplayName.substring(0, fileDisplayName.indexOf("."));
 
-	var pickedFolderPath = pickFolder();
+	var pickedFolderPath = pickFolder(fileFolder);
 	if (pickedFolderPath){
 		var baseFilePath = pickedFolderPath + fileName + "-";
 
