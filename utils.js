@@ -8,7 +8,7 @@ var RGX_GRID = /^_grid_$/
 
 // --------- Storyporter Utils --------- //
 function getStoryLayers(artboard){
-	return getLayers(artboard,RGX_STORY_PREFIX, false);
+	return getLayers(artboard,RGX_STORY_PREFIX, true);
 }
 
 function getGridLayer(artboard){
@@ -85,7 +85,9 @@ function getLayers(artboard, rgx, deep){ //
 }
 
 function _getLayers(parent, rgx, deep, layers){
-	if (parent.layers){
+	var className = "" + parent.class();
+	// for now, constrains to LayerGroup/ArtboardGroup to avoid crash (when too many layers)	
+	if ("MSArtboardGroup" == className || "MSLayerGroup" == className){
 		var layer_array = [parent layers]
 		var i, count = [layer_array count], layer, name;
 

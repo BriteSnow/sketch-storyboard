@@ -8,9 +8,17 @@ var artboards = getArtboards();
 
 exportAllStories();
 
-// for (var i = 0; i < 3; i++){
+// //with the test.sketch, this reproduces the crash when too many layer (when 10 or above)
+// for (var i = 0; i < 11; i++){
+// 	log("----- test " + i);
 // 	test();
+// 	//log("" + COScript.currentCOScript().cleanup)
+// 	//COScript.currentCOScript().garbageCollect() // this does not do anything.
+// 	//COScript.currentCOScript().cleanup() // this will crash
+// 	log("----- test " + i + " DONE");
 // }
+
+// function test(){
 // 	var a = artboards[0];
 // 	var storyLayers = getStoryLayers(a); 
 // 	storyLayers.forEach(function(val){
@@ -73,17 +81,16 @@ function exportArtboardPngs(artboard, parent, baseFilePath){
 	var fullPath = baseFilePath + parent.name() + ".png";
 	saveArtboard(artboard,fullPath);
 
+	// export grid if exist
 	if (gridLayer){
 		gridLayer.setIsVisible(true);
+		fullPath = baseFilePath + "grid-" + parent.name() + ".png";
+		saveArtboard(artboard,fullPath);
+		gridLayer.setIsVisible(false);
 	}
 
 	// if we do not have variant layers, export the grid
-	if (variantLayers.length == 0){
-		if (gridLayer){
-			fullPath = baseFilePath + "grid-" + parent.name() + ".png";
-			saveArtboard(artboard,fullPath);
-		}
-	}else{
+	if (variantLayers.length > 0){
 		// export the variants
 		var name;
 		variantLayers.forEach(function(variantLayer){
@@ -95,8 +102,6 @@ function exportArtboardPngs(artboard, parent, baseFilePath){
 		});
 	}
 
-	if (gridLayer){
-		gridLayer.setIsVisible(false);
-	}
+
 
 }
