@@ -8,7 +8,7 @@ var RGX_GRID = /^_grid_$/
 
 // --------- Storyporter Utils --------- //
 function getStoryLayers(artboard){
-	return getLayers(artboard,RGX_STORY_PREFIX, true);
+	return getLayers(artboard,RGX_STORY_PREFIX, false);
 }
 
 function getGridLayer(artboard){
