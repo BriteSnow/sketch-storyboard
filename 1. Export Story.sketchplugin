@@ -37,7 +37,7 @@ function exportStory(){
 	if (pickedFolderPath){
 		var baseFilePath = pickedFolderPath + fileName + "-";
 
-		var current = getCurrentArtboard();
+		var current = getSelectedArtboard();
 		if (current === null){
 			getArtboards().forEach(function(artboard){
 				exportArtboardStories(artboard,baseFilePath);	

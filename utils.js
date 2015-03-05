@@ -26,6 +26,52 @@ function getVariantLayers(parent){
 // --------- /Storyporter Utils --------- //
 
 // --------- Sketch Helpers --------- //
+function getArtboards(){
+	var currentPage = [doc currentPage]
+
+	var artboard_array = [currentPage artboards]
+	var artboards = []
+	var artboard;
+
+	for(var i=0; i < [artboard_array count]; i++){
+		artboard = artboard_array[i];
+		if ("MSArtboardGroup" == artboard.class()){
+			artboards.push(artboard);	
+		}
+	}
+
+	return sortByName(artboards);
+}
+
+function getCurrentArtboard(){
+	var page = [doc currentPage]
+	var current = [page currentArtboard]
+	return current;
+}
+
+// return the current arboard if one selected, or null
+function getSelectedArtboard(){
+	var page = [doc currentPage]
+	var current = [page currentArtboard]
+	if (current != null && current.isSelected() === 1){
+		return current;
+	}else{
+		return null;
+	}
+}
+
+// return {layer:,idx:} of the first visible from a layers array
+function getFirstVisible(layers){
+	var i, l = layers.length, layer;
+	for (i = 0; i < l; i++){
+		layer = layers[i];
+		if (layer.isVisible()){
+			return {layer:layer,idx:i};
+		}
+	}
+	return null;
+}
+
 function getLayers(artboard, rgx, deep){ // 
 	deep = (deep === true)?true:false;
 	var layers = [];
@@ -65,33 +111,6 @@ function _getLayers(parent, rgx, deep, layers){
 	}
 }
 
-function getArtboards(){
-	var currentPage = [doc currentPage]
-
-	var artboard_array = [currentPage artboards]
-	var artboards = []
-	var artboard;
-
-	for(var i=0; i < [artboard_array count]; i++){
-		artboard = artboard_array[i];
-		if ("MSArtboardGroup" == artboard.class()){
-			artboards.push(artboard);	
-		}
-	}
-
-	return sortByName(artboards);
-}
-
-// return the current arboard if one selected, or null
-function getCurrentArtboard(){
-	var page = [doc currentPage]
-	var current = [page currentArtboard]
-	if (current != null && current.isSelected() === 1){
-		return current;
-	}else{
-		return null;
-	}
-}
 // --------- /Sketch Helpers --------- //
 
 // --------- Sketch Save Helpers --------- //

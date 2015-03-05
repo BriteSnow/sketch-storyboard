@@ -1,0 +1,49 @@
+// jshint ignore: start
+#import 'utils.js'
+
+log("--");
+log("2. Prev Story");
+
+var currentArtboard = getCurrentArtboard();
+
+
+prevStory();
+
+function prevStory(){
+	// if no artboard, just show and return
+	if (currentArtboard === null){
+		[doc showMessage:"No Artboard selected, please, select one"];
+		return;
+	}
+
+	var stories = getStoryLayers(currentArtboard);
+
+  var lastIdx = stories.length - 1;
+
+	// find the first one visible
+	var visibleInfo = getFirstVisible(stories);
+	
+	// determine the prev story
+	var prevIdx = lastIdx; // by default it is 0
+
+	if (visibleInfo !== null){
+		//log("\t get first visible: " + visibleInfo.layer.name());	
+		if (visibleInfo.idx === 0){
+			// if it is the lastIdx, then, we put nextIdx to -1 to hide all sub stories
+			prevIdx = -1;
+		}else{
+			// we can decrement
+			prevIdx = visibleInfo.idx - 1;
+		}
+	}
+
+	// hide all of the stories
+	stories.forEach(function(story){
+		story.setIsVisible(false);
+	}); 
+
+	// Show the next story (only if nextIdx >= 0)
+	if (prevIdx >= 0){
+		stories[prevIdx].setIsVisible(true);
+	}
+}
