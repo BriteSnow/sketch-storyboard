@@ -4,9 +4,7 @@
 log("--");
 log("1. Export Story " + [@"~/" stringByExpandingTildeInPath]);
 
-var artboards = getArtboards();
-
-exportAllStories();
+exportStory();
 
 // //with the test.sketch, this reproduces the crash when too many layer (when 10 or above)
 // for (var i = 0; i < 11; i++){
@@ -28,7 +26,8 @@ exportAllStories();
 // }
 // log("END!")
 
-function exportAllStories(){
+
+function exportStory(){
 	var fileDisplayName = [doc displayName];
 	var currentFilePath = [[doc fileURL] path];
 	var fileFolder = currentFilePath.split(fileDisplayName)[0];
@@ -38,9 +37,14 @@ function exportAllStories(){
 	if (pickedFolderPath){
 		var baseFilePath = pickedFolderPath + fileName + "-";
 
-		getArtboards().forEach(function(artboard){
-			exportArtboardStories(artboard,baseFilePath);	
-		});
+		var current = getCurrentArtboard();
+		if (current === null){
+			getArtboards().forEach(function(artboard){
+				exportArtboardStories(artboard,baseFilePath);	
+			});
+		}else{
+			exportArtboardStories(current,baseFilePath);	
+		}
 	}
 }
 

@@ -8,7 +8,7 @@ var RGX_GRID = /^_grid_$/
 
 // --------- Storyporter Utils --------- //
 function getStoryLayers(artboard){
-	return getLayers(artboard,RGX_STORY_PREFIX, true);
+	return getLayers(artboard,RGX_STORY_PREFIX, false);
 }
 
 function getGridLayer(artboard){
@@ -25,7 +25,76 @@ function getVariantLayers(parent){
 }
 // --------- /Storyporter Utils --------- //
 
-// --------- Sketch APIs --------- //
+// --------- Sketch Helpers --------- //
+function getLayers(artboard, rgx, deep){ // 
+	deep = (deep === true)?true:false;
+	var layers = [];
+
+	_getLayers(artboard,rgx,deep,layers);
+
+	return sortByName(layers);
+}
+
+function _getLayers(parent, rgx, deep, layers){
+	var className = "" + parent.class();
+	// for now, constrains to LayerGroup/ArtboardGroup to avoid crash (when too many layers)	
+	if ("MSArtboardGroup" == className || "MSLayerGroup" == className){
+
+		// for now, if story layer (recursive), then avoid going down variant and grid group
+		var parentName = parent.name()
+		if (rgx === RGX_STORY_PREFIX && (matches(RGX_GRID,parentName) || matches(RGX_VARIANT,parentName))){
+			return;	
+		}
+
+		var layer_array = [parent layers]
+		var i, count = [layer_array count], layer, name;
+
+		for (i = 0; i < count; i++){
+
+			layer = [layer_array objectAtIndex: i];
+			name = layer.name();
+
+			if ((typeof rgx === "undefined") || rgx && matches(rgx,name) ){
+				layers.push(layer);		
+			}
+			if (deep){
+
+				_getLayers(layer, rgx, deep, layers);
+			}
+		}
+	}
+}
+
+function getArtboards(){
+	var currentPage = [doc currentPage]
+
+	var artboard_array = [currentPage artboards]
+	var artboards = []
+	var artboard;
+
+	for(var i=0; i < [artboard_array count]; i++){
+		artboard = artboard_array[i];
+		if ("MSArtboardGroup" == artboard.class()){
+			artboards.push(artboard);	
+		}
+	}
+
+	return sortByName(artboards);
+}
+
+// return the current arboard if one selected, or null
+function getCurrentArtboard(){
+	var page = [doc currentPage]
+	var current = [page currentArtboard]
+	if (current != null && current.isSelected() === 1){
+		return current;
+	}else{
+		return null;
+	}
+}
+// --------- /Sketch Helpers --------- //
+
+// --------- Sketch Save Helpers --------- //
 
 function pickFolder(baseFolder){
 	baseFolder = baseFolder || [@"~/Desktop/" stringByExpandingTildeInPath];
@@ -73,57 +142,7 @@ function in_sandbox(){
   var environ = [[NSProcessInfo processInfo] environment];
   return (nil != [environ objectForKey:@"APP_SANDBOX_CONTAINER_ID"]);
 }
-
-
-function getLayers(artboard, rgx, deep){ // 
-	deep = (deep === true)?true:false;
-	var layers = [];
-
-	_getLayers(artboard,rgx,deep,layers);
-
-	return sortByName(layers);
-}
-
-function _getLayers(parent, rgx, deep, layers){
-	var className = "" + parent.class();
-	// for now, constrains to LayerGroup/ArtboardGroup to avoid crash (when too many layers)	
-	if ("MSArtboardGroup" == className || "MSLayerGroup" == className){
-		var layer_array = [parent layers]
-		var i, count = [layer_array count], layer, name;
-
-		for (i = 0; i < count; i++){
-
-			layer = [layer_array objectAtIndex: i];
-			name = layer.name();
-
-			if ((typeof rgx === "undefined") || rgx && matches(rgx,name) ){
-				layers.push(layer);		
-			}
-			if (deep){
-
-				_getLayers(layer, rgx, deep, layers);
-			}
-		}
-	}
-}
-
-function getArtboards(){
-	var currentPage = [doc currentPage]
-
-	var artboard_array = [currentPage artboards]
-	var artboards = []
-	var artboard;
-
-	for(var i=0; i < [artboard_array count]; i++){
-		artboard = artboard_array[i];
-		if ("MSArtboardGroup" == artboard.class()){
-			artboards.push(artboard);	
-		}
-	}
-
-	return sortByName(artboards);
-}
-// --------- /Sketch APIs --------- //
+// --------- /Sketch Save Helpers --------- //
 
 
 // --------- JS Utils --------- //
