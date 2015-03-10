@@ -1,5 +1,6 @@
 {
-    "name": "Story Exporter",
-    "description": "Exporting a .sketch file into a story flow and its overlay pngs.",
+    "name": "Sketch Storyboard",
+    "version": "0.5",
+    "description": "Turn your Artboards into storyboards",
     "tags": ["story", "agile", "export", "design specs", "dev", "development"]
 }
