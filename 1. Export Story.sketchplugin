@@ -4,7 +4,7 @@
 log("--");
 log("1. Export Story " + [@"~/" stringByExpandingTildeInPath]);
 
-exportStory();
+cmdExportStory();
 
 // //with the test.sketch, this reproduces the crash when too many layer (when 10 or above)
 // for (var i = 0; i < 11; i++){
@@ -27,7 +27,7 @@ exportStory();
 // log("END!")
 
 
-function exportStory(){
+function cmdExportStory(){
 	var fileDisplayName = [doc displayName];
 	var currentFilePath = [[doc fileURL] path];
 	var fileFolder = currentFilePath.split(fileDisplayName)[0];
@@ -48,14 +48,50 @@ function exportStory(){
 	}
 }
 
+function exportArtboardStories(artboard, baseFilePath){
+	var storyboard = new Storyboard(artboard);
+	storyboard.init();
 
-function exportArtboardStories(artboard,baseFilePath){
-	var storyLayers = getStoryLayers(artboard); 
+	storyboard.hideAll();
 
-	// Hide all story layers
-	storyLayers.forEach(function(val){
-		val.setIsVisible(false);
-	});
+	// export the topStory
+	exportStory(storyboard.topStory);
+
+	var storyCtx = storyboard.makeNextStoryVisible();
+
+	while (storyCtx){
+		//exportStory(storyCtx.story);
+		storyCtx = storyboard.makeNextStoryVisible();
+	}
+
+}
+
+function exportStory(story,baseFilePath){
+	story.hideAll();
+
+	var storyboard = story.storyboard;
+	var artboard = storyboard.artboard;
+
+	// export the top one
+	var fullPath = baseFilePath + story.name() + ".png";
+	log("Will export: " + story.name() + " as " + fullPath);
+	saveArtboard(artboard,fullPath);	
+
+	// export the grid
+	if (storyboard.hasGrid()){
+		fullPath = baseFilePath + "grid-" + story.name() + ".png";
+		log("Will export GRID for: " + story.name() + " as " + fullPath);
+		saveArtboard(artboard,fullPath);
+	}
+	
+}
+
+function exportArtboardStoriesOld(artboard,baseFilePath){
+
+	var storyboard = new Storyboard(artboard);
+	storyboard.init();
+
+	storyboard.hideAll();
 
 	// export the first artboard
 	exportArtboardPngs(artboard,artboard,baseFilePath);

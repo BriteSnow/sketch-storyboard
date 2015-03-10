@@ -1,12 +1,12 @@
 ### About
 
-Story Exporter is a Sketch plugin which turns a sketch file into an actionable story flow and dev specification as a set of well organized .png files. Just follow the naming convention and Story Exporter will generate the multiple png output for in a clean and ordered way.
+Sketch Storyboard is a Sketch plugin which turns your sketch Artboards into Storyboards that can be easily exported as a set of .pngs or loop through via the plugin menus "Next Story" and "Prev Story." Everything is based on group layer naming convention, and support "Story Layers" as well as "Overlay Layers" concepts.
 
 ## Install
 
-- Download and Unzip [sketch-storexporter-master.zip](https://github.com/BriteSnow/sketch-storyexporter/archive/master.zip)
-- rename the unzipped folder to "Story Exporter"
-- Move the "Store Exporter" into the Sketch Plugins folder (To find your Sketch folder, in Sketch menu, go to: "Plugins > Reveal Plugins Folder...")
+- Download and Unzip [sketch-storyboard-master.zip](https://github.com/BriteSnow/sketch-storyboard/archive/master.zip)
+- rename the unzipped folder to "Storyboard"
+- Move the "Storyboard" folder into the Sketch Plugins folder (To find your Sketch folder, in Sketch menu, go to: "Plugins > Reveal Plugins Folder...")
 - Now, in Sketch, you should see "Plugins > Story Exporter > 0. Story Export"
 
 

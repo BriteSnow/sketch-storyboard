@@ -1,14 +1,12 @@
 // jshint ignore: start
 
 #import 'sandbox.js'
+#import 'Storyboard.js'
 
-var RGX_STORY_PREFIX = /^(\d\d*-)/
-var RGX_VARIANT = /^-.*-$/
-var RGX_GRID = /^_grid_$/
 
 // --------- Storyporter Utils --------- //
 function getStoryLayers(artboard){
-	return getLayers(artboard,RGX_STORY_PREFIX, false);
+	return getLayers(artboard,RGX_STORY_PREFIX, true);
 }
 
 function getGridLayer(artboard){
@@ -22,6 +20,14 @@ function getGridLayer(artboard){
 
 function getVariantLayers(parent){
 	return getLayers(parent,RGX_VARIANT,false);
+}
+
+function showStory(story){
+	story.setIsVisible(true);
+	var parent = story.parentGroup();
+	if ("MSArtboardGroup" == artboard.class()){
+		artboards.push(artboard);	
+	}	
 }
 // --------- /Storyporter Utils --------- //
 
