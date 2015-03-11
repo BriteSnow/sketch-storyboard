@@ -3,34 +3,6 @@
 #import 'sandbox.js'
 #import 'Storyboard.js'
 
-
-// --------- Storyporter Utils --------- //
-function getStoryLayers(artboard){
-	return getLayers(artboard,RGX_STORY_PREFIX, true);
-}
-
-function getGridLayer(artboard){
-	var layers = getLayers(artboard,RGX_GRID,false);
-	if (layers.length > 0){
-		return layers[0];
-	}else{
-		return null;
-	}
-}
-
-function getVariantLayers(parent){
-	return getLayers(parent,RGX_VARIANT,false);
-}
-
-function showStory(story){
-	story.setIsVisible(true);
-	var parent = story.parentGroup();
-	if ("MSArtboardGroup" == artboard.class()){
-		artboards.push(artboard);	
-	}	
-}
-// --------- /Storyporter Utils --------- //
-
 // --------- Sketch Helpers --------- //
 function getArtboards(){
 	var currentPage = [doc currentPage]
@@ -169,11 +141,61 @@ function in_sandbox(){
 }
 // --------- /Sketch Save Helpers --------- //
 
+// --------- Storyboard Export Methods --------- //
+function exportArtboardStories(artboard, baseFilePath){
+	var storyboard = new Storyboard(artboard);
+	storyboard.init();
+
+	storyboard.hideAll();
+
+	// export the topStory
+	exportStory(storyboard.topStory,baseFilePath);
+
+	var storyCtx = storyboard.makeNextStoryVisible();
+
+	while (storyCtx){
+		exportStory(storyCtx.story,baseFilePath);
+		storyCtx = storyboard.makeNextStoryVisible();
+	}
+	
+	storyboard.hideAll();
+}
+
+function exportStory(story,baseFilePath){
+	story.hideAll();
+
+	var storyboard = story.storyboard;
+	var artboard = storyboard.artboard;
+
+	// export the top one
+	var fullPath = baseFilePath + story.name() + ".png";
+	saveArtboard(artboard,fullPath);	
+
+	// export the grid
+	if (storyboard.hasGrid()){
+		fullPath = baseFilePath + "grid-" + story.name() + ".png";
+		storyboard.showGrid();
+		saveArtboard(artboard,fullPath);
+		storyboard.hideGrid();
+	}
+
+	// export the overlays
+	if (story.hasOverlays()){
+		story.overlays.forEach(function(overlay){
+			overlay.setIsVisible(true);
+			var name = overlay.name().substring(1);
+			fullPath = baseFilePath + name + story.name() + ".png";
+			saveArtboard(artboard,fullPath);
+			overlay.setIsVisible(false);
+		});
+	}
+
+	
+}
+// --------- /Storyboard Export Methods --------- //
+
 
 // --------- JS Utils --------- //
-
-
-
 function matches(rgx,name){
 	var r = rgx.exec(name)
 	return (r != null)?true:false;

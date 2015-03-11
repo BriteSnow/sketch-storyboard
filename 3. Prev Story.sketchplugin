@@ -2,7 +2,7 @@
 #import 'utils.js'
 
 log("--");
-log("2. Prev Story");
+log("3. Prev Story");
 
 var currentArtboard = getCurrentArtboard();
 

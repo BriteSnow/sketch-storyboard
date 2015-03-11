@@ -1,0 +1,34 @@
+// jshint ignore: start
+#import 'utils.js'
+
+log("--");
+log("1. Export Current Storyboard " + [@"~/" stringByExpandingTildeInPath]);
+
+cmdExportCurrentStoryboard();
+
+function cmdExportCurrentStoryboard(){
+	var artboard = getCurrentArtboard();
+
+	// check that we have a current artboard
+	if (!artboard){
+		doc.showMessage("No Artboard selected, please select one");
+		return;
+	}
+
+	var fileDisplayName = [doc displayName];
+	var currentFilePath = [[doc fileURL] path];
+	var fileFolder = currentFilePath.split(fileDisplayName)[0];
+	var fileName = fileDisplayName.substring(0, fileDisplayName.indexOf("."));
+
+	var pickedFolderPath = pickFolder(fileFolder);
+	if (pickedFolderPath){
+		var baseFilePath = pickedFolderPath + fileName + "-";
+		exportArtboardStories(artboard,baseFilePath);	
+	}
+}
+
+
+
+//log("" + COScript.currentCOScript().cleanup)
+//COScript.currentCOScript().garbageCollect() // this does not do anything.
+//COScript.currentCOScript().cleanup() // this will crash

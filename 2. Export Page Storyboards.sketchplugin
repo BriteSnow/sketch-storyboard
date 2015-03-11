@@ -1,0 +1,24 @@
+// jshint ignore: start
+#import 'utils.js'
+
+log("--");
+log("2. Export Page Storyboards " + [@"~/" stringByExpandingTildeInPath]);
+
+cmdExportPageStoryboards();
+
+function cmdExportPageStoryboards(){
+	var artboard = getCurrentArtboard();
+
+
+	var fileDisplayName = [doc displayName];
+	var currentFilePath = [[doc fileURL] path];
+	var fileFolder = currentFilePath.split(fileDisplayName)[0];
+	var fileName = fileDisplayName.substring(0, fileDisplayName.indexOf("."));
+
+	var pickedFolderPath = pickFolder(fileFolder);
+	if (pickedFolderPath){
+		getArtboards().forEach(function(artboard){
+			exportArtboardStories(artboard,baseFilePath);	
+		});
+	}
+}
