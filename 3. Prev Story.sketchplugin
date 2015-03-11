@@ -1,8 +1,8 @@
 // jshint ignore: start
 #import 'utils.js'
 
-log("--");
-log("3. Prev Story");
+// log("--");
+// log("3. Prev Story");
 
 var currentArtboard = getCurrentArtboard();
 
