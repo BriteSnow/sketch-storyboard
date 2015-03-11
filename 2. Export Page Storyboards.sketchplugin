@@ -15,10 +15,19 @@ function cmdExportPageStoryboards(){
 	var fileFolder = currentFilePath.split(fileDisplayName)[0];
 	var fileName = fileDisplayName.substring(0, fileDisplayName.indexOf("."));
 
+	var app = [NSApplication sharedApplication];
+
 	var pickedFolderPath = pickFolder(fileFolder);
 	if (pickedFolderPath){
-		getArtboards().forEach(function(artboard){
-			exportArtboardStories(artboard,baseFilePath);	
+		var artboards = getArtboards();
+		artboards.forEach(function(artboard){
+			var baseFilePath = pickedFolderPath + fileName + "-";
+			exportArtboardStories(artboard,baseFilePath);
+
+			doc.showMessage("DONE exporting " + artboard.name() + " storyboard. Preparing next storyboard...");
+			//[NSThread sleepForTimeInterval:3]
 		});
+
+		doc.showMessage("DONE exporting " + artboards.length + " Page Storyboards");
 	}
 }

@@ -24,6 +24,7 @@ function cmdExportCurrentStoryboard(){
 	if (pickedFolderPath){
 		var baseFilePath = pickedFolderPath + fileName + "-";
 		exportArtboardStories(artboard,baseFilePath);	
+		doc.showMessage("DONE exporting " + artboard.name() + " storyboard.");
 	}
 }
 

@@ -132,7 +132,7 @@ function saveArtboard(artboard,fullPath){
 	}
 
 
-	[doc showMessage:"Saved as " + fullPath + ".png"];
+	[doc showMessage:"Saved as " + fullPath];
 }
 
 function in_sandbox(){
@@ -154,6 +154,8 @@ function exportArtboardStories(artboard, baseFilePath){
 	var storyCtx = storyboard.makeNextStoryVisible();
 
 	while (storyCtx){
+		COScript.currentCOScript().garbageCollect()
+		[NSThread sleepForTimeInterval:.3]
 		exportStory(storyCtx.story,baseFilePath);
 		storyCtx = storyboard.makeNextStoryVisible();
 	}
