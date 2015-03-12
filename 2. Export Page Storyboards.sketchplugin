@@ -25,9 +25,11 @@ function cmdExportPageStoryboards(){
 			exportArtboardStories(artboard,baseFilePath);
 
 			doc.showMessage("DONE exporting " + artboard.name() + " storyboard. Preparing next storyboard...");
+			COScript.currentCOScript().garbageCollect()
+			[NSThread sleepForTimeInterval:.3]
 			//[NSThread sleepForTimeInterval:3]
 		});
 
-		doc.showMessage("DONE exporting " + artboards.length + " Page Storyboards");
+		doc.showMessage("DONE exporting " + artboards.length + " Storyboards");
 	}
 }

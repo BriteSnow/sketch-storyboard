@@ -49,46 +49,6 @@ function getFirstVisible(layers){
 	}
 	return null;
 }
-
-function getLayers(artboard, rgx, deep){ // 
-	deep = (deep === true)?true:false;
-	var layers = [];
-
-	_getLayers(artboard,rgx,deep,layers);
-
-	return sortByName(layers);
-}
-
-function _getLayers(parent, rgx, deep, layers){
-	var className = "" + parent.class();
-	// for now, constrains to LayerGroup/ArtboardGroup to avoid crash (when too many layers)	
-	if ("MSArtboardGroup" == className || "MSLayerGroup" == className){
-
-		// for now, if story layer (recursive), then avoid going down variant and grid group
-		var parentName = parent.name()
-		if (rgx === RGX_STORY_PREFIX && (matches(RGX_GRID,parentName) || matches(RGX_VARIANT,parentName))){
-			return;	
-		}
-
-		var layer_array = [parent layers]
-		var i, count = [layer_array count], layer, name;
-
-		for (i = 0; i < count; i++){
-
-			layer = [layer_array objectAtIndex: i];
-			name = layer.name();
-
-			if ((typeof rgx === "undefined") || rgx && matches(rgx,name) ){
-				layers.push(layer);		
-			}
-			if (deep){
-
-				_getLayers(layer, rgx, deep, layers);
-			}
-		}
-	}
-}
-
 // --------- /Sketch Helpers --------- //
 
 // --------- Sketch Save Helpers --------- //
@@ -133,6 +93,10 @@ function saveArtboard(artboard,fullPath){
 
 
 	[doc showMessage:"Saved as " + fullPath];
+
+	// Hack: Wait to prevent GC to crash
+	COScript.currentCOScript().garbageCollect()
+	[NSThread sleepForTimeInterval:.1]	
 }
 
 function in_sandbox(){
@@ -148,14 +112,13 @@ function exportArtboardStories(artboard, baseFilePath){
 
 	storyboard.hideAll();
 
+
 	// export the topStory
 	exportStory(storyboard.topStory,baseFilePath);
 
 	var storyCtx = storyboard.makeNextStoryVisible();
 
 	while (storyCtx){
-		COScript.currentCOScript().garbageCollect()
-		[NSThread sleepForTimeInterval:.3]
 		exportStory(storyCtx.story,baseFilePath);
 		storyCtx = storyboard.makeNextStoryVisible();
 	}
@@ -183,7 +146,7 @@ function exportStory(story,baseFilePath){
 
 	// export the overlays
 	if (story.hasOverlays()){
-		story.overlays.forEach(function(overlay){
+		story.overlays.forEach(function(overlay){		
 			overlay.setIsVisible(true);
 			var name = overlay.name().substring(1);
 			fullPath = baseFilePath + name + story.name() + ".png";
