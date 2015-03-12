@@ -1,6 +1,6 @@
 {
     "name": "Sketch Storyboard",
-    "version": "0.6.0",
+    "version": "0.6.1-SNAPSHOT",
     "description": "Turn your Artboards into storyboards",
     "tags": ["story", "agile", "export", "design specs", "dev", "development"]
 }
