@@ -1,14 +1,9 @@
 // jshint ignore: start
 #import 'utils.js'
 
-// log("--");
-// log("4. Next Story ");
-
 var currentArtboard = getCurrentArtboard();
 
-
 nextStory();
-
 
 function nextStory(){
 	// if no artboard, just show and return
@@ -22,8 +17,15 @@ function nextStory(){
 	// log("storyboard storyCount: " + storyboard.storyCount);
 	// log("storyboard overlayCount: " + storyboard.overlayCount);
 
-	var didShow = storyboard.makeNextStoryVisible();
-	if (!didShow){
-		storyboard.hideAll();
-	}
+	var firstVisibleStory = storyboard.findFirstVisibleStory();
+
+	var nextIdx = 0, nextStory = null;
+
+	var firstVisibleStoryFlatIdx = storyboard.getFlatIdxOf(firstVisibleStory);
+	log("firstVisibleStoryFlatIdx " + firstVisibleStoryFlatIdx);
+
+	// since the first story is the topStory (artboard), when not found we have 0 
+	firstVisibleStoryFlatIdx = (firstVisibleStoryFlatIdx === -1)?0:firstVisibleStoryFlatIdx;
+
+	var nextFlatIdx = storyboard.makeNextStoryVisible(firstVisibleStoryFlatIdx);
 }

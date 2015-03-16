@@ -4,7 +4,8 @@
 function Storyboard(artboard){
 	this.artboard = artboard;
 	this.storyCount = 0;
-	this.overlayCount = 0;	
+	this.overlayCount = 0;
+	this.flatStories = [];	
 }
 
 (function(){
@@ -12,47 +13,92 @@ function Storyboard(artboard){
 		this.topStory = new Story(this,this.artboard,null);
 		this.storyCount++;
 		this.topStory.init();
+		this.flatStories = sortByName(this.flatStories);
 	};
 
-	// return the story info that has been made visible {story:,idx:} or null if nothing later
-	Storyboard.prototype.makeNextStoryVisible = function(){
-		var parentStory = this.topStory;
+	Storyboard.prototype.addFlatStory = function(story){
+		this.flatStories.push(story);
+	};
 
-		var nextIdx = parentStory.findFirstVisibleStoryIdx() + 1;
-		var story = parentStory.getStoryAt(nextIdx); 
-
-		if (story){
-			this.makeChildStoryVisible(parentStory, nextIdx);
-			return {story:story,idx:nextIdx};
+	Storyboard.prototype.getFlatStoryAt = function(idx){
+		if (idx >= 0 && idx < this.flatStories.length){
+			return this.flatStories[idx];	
 		}else{
 			return null;
-		}		
+		}
 	};
 
-	Storyboard.prototype.makePrevStoryVisible = function(){
+	// return the flat index of this story, or -1 if not found.
+	Storyboard.prototype.getFlatIdxOf = function(story){
+		var i, l = this.flatStories.length;
+		for (i = 0; i < l; i++){
+			if (story === this.flatStories[i]){
+				return i;
+			}
+		}
+		return -1;
+	};
+
+	// recursively find the leaft first Story
+	Storyboard.prototype.findFirstVisibleStory = function(){
 		var parentStory = this.topStory;
 
-		var firstVisibleStoryIdx = parentStory.findFirstVisibleStoryIdx();
-		var prevIdx = firstVisibleStoryIdx -1;
+		var firstVisibleStory = null;
 
-		// because the first story the parent Story
-		if (firstVisibleStoryIdx === 0){
-			this.hideAll();
-			return true;
-		}else if (parentStory.getStoryAt(prevIdx)){
-			this.makeChildStoryVisible(parentStory, prevIdx);
-			return true;
+		var tmpStory = null;
+		while (parentStory && parentStory.hasStories()){
+			tmpStory = parentStory.findFirstVisibleStory();
+			if (tmpStory){
+				firstVisibleStory = tmpStory;
+				parentStory = tmpStory;
+			}else{
+				parentStory = null; // to stop the loop
+			}
+		}
+		return firstVisibleStory;
+	};
+
+	// return flatIdx for the next story or -1 if none
+	Storyboard.prototype.makeNextStoryVisible = function(currentFlatIdx){
+		
+
+		var currentStory = this.getFlatStoryAt(currentFlatIdx);
+		var nextStoryFlatIdx = currentFlatIdx + 1;
+		var nextStory = this.getFlatStoryAt(nextStoryFlatIdx);
+
+		hideStory(currentStory);
+		showStory(nextStory);
+
+		if (nextStory){
+			return nextStoryFlatIdx;
 		}else{
-			return false;
-		}		
+			return -1;
+		}
+
+	};
+
+	Storyboard.prototype.makePrevStoryVisible = function(currentFlatIdx){
+
+		var currentStory = this.getFlatStoryAt(currentFlatIdx);
+		var prevStoryFlatIdx = currentFlatIdx - 1;
+		var prevStory = this.getFlatStoryAt(prevStoryFlatIdx);
+
+		hideStory(currentStory);
+		showStory(prevStory);
+
+		if (prevStory){
+			return prevStoryFlatIdx;
+		}else{
+			return -1;
+		}
+		
 	};
 
 	// return true if the story has been found and shown
-	Storyboard.prototype.makeChildStoryVisible = function(parentStory,idx){
-		var story = parentStory.getStoryAt(idx);
+	Storyboard.prototype.makeChildStoryVisible = function(story){
 		if (story){
 			story.hideAllOverlaysBut(-1);
-			parentStory.hideAllStoriesBut(idx);
+			parentStory.hideAllStoriesBut(story);
 			story.show();
 			return true;
 		}else{
@@ -67,21 +113,43 @@ function Storyboard(artboard){
 
 	Storyboard.prototype.hasGrid = function(){
 		return (this.topStory.grid)?true:false;
-	}
+	};
 
 	Storyboard.prototype.hideGrid = function(){
 		if (this.hasGrid()){
-			this.topStory.grid.setIsVisible(false)
+			this.topStory.grid.setIsVisible(false);
 		}
-	}	
+	};
 
 	Storyboard.prototype.showGrid = function(){
 		if (this.hasGrid()){
-			this.topStory.grid.setIsVisible(true)
+			this.topStory.grid.setIsVisible(true);
+		}
+	};
+
+
+	//// Private Helpers ////
+
+	function showStory(story){
+		if (story){
+			if (!story.isTop()){
+				story.show(true);
+				// hide all sub stories
+				story.hideAllStoriesBut(null);
+				// make sure only this story is shown from the parent
+				story.parentStory.hideAllStoriesBut(story);
+			}
 		}
 	}
-	//// Private Helpers
 
+	function hideStory(story){
+		if (story){
+			if (!story.isTop()){
+				story.hide(true);
+			}			
+		}
+	}
+	
 })();
 // --------- /Storyboard --------- //
 
@@ -98,6 +166,9 @@ function Story(storyboard,layer,parentStory){
 
 (function(){
 	Story.prototype.init = function(){
+		// add this story to storyboard.flatStories
+		this.storyboard.addFlatStory(this);
+		// load stories
 		loadStories.call(this);
 	};
 
@@ -111,42 +182,66 @@ function Story(storyboard,layer,parentStory){
 
 	Story.prototype.hasStories = function(){
 		return (this.stories.length > 0);
-	}
+	};
 
 	Story.prototype.hasOverlays = function(){
 		return (this.overlays.length > 0);
-	}
+	};
 
-	// return the index of the first visible subStory or return null
-	Story.prototype.findFirstVisibleStoryIdx = function(){
+	// return first 
+	Story.prototype.findFirstVisibleStory = function(){
 		var i, l = this.stories.length, story;
 		for (i = 0; i < l; i++){
 			story = this.stories[i];
 			if (story.layer.isVisible()){
-				return i;
+				return story;
 			}
 		}
-		return -1;
+		return null;
 	};
 
-	Story.prototype.show = function(){
+	Story.prototype.hide = function(toTop){
+		toTop = (toTop === true)?true:false;
+
+		this.layer.setIsVisible(false);
+
+		if (toTop){
+			var parent = this.parentStory;
+			while (parent && !parent.isTop()){
+				parent.hide();
+				parent = parent.parentStory;
+			}
+		}
+	};
+
+	Story.prototype.show = function(toTop){
+		toTop = (toTop === true)?true:false;
+
 		this.layer.setIsVisible(true);
+
+		if (toTop){
+			var parent = this.parentStory;
+			while (parent && !parent.isTop()){
+				parent.show();
+				parent = parent.parentStory;
+			}
+		}
 	};
 
 	Story.prototype.hideAll = function(){
-		this.hideAllStoriesBut(-1);
+		this.hideAllStoriesBut(null);
 		this.hideAllOverlaysBut(-1);
 		if (this.grid){
 			this.grid.setIsVisible(false);
 		}
-	}
+	};
 
-	Story.prototype.hideAllStoriesBut = function(idx){
-		var i, l = this.stories.length, story;
+	Story.prototype.hideAllStoriesBut = function(story){
+		var i, l = this.stories.length, tmpStory;
 		for (i = 0; i < l; i++){
-			if (i !== idx){
-				story = this.stories[i];
-				story.layer.setIsVisible(false);
+			var tmpStory = this.stories[i];
+			if (story !== tmpStory){
+				tmpStory.layer.setIsVisible(false);
 			}
 		}		
 	};
@@ -184,7 +279,7 @@ function Story(storyboard,layer,parentStory){
 		for (i = 0; i < count; i++){
 			layer = [layer_array objectAtIndex: i];
 			name = layer.name();
-			if (isStoryName(name)){
+			if (isStoryLayer(layer)){
 				stories.push(new Story(this.storyboard,layer,this));
 				this.storyboard.storyCount++;
 			}else if (isOverlayName(name)){
@@ -208,9 +303,16 @@ function Story(storyboard,layer,parentStory){
 
 
 // --------- Helpers --------- //
-var RGX_STORY_PREFIX = /^(\d\d*-)/
-var RGX_OVERLAY = /^-.*-$/
-var RGX_GRID = /^_grid_$/
+var RGX_STORY_PREFIX = /^(-\d)\d\d*-.*-$/;
+var RGX_OVERLAY = /^-\(.*\)-$/;
+var RGX_GRID = /^-_grid_-$/;
+
+function isStoryLayer(layer){
+	var className = "" + layer.class();
+	var isStory = (className === "MSLayerGroup")
+	var isStory = isStory && isStoryName(layer.name());
+	return isStory;
+}
 
 function isStoryName(name){
 	return matches(RGX_STORY_PREFIX,name);
@@ -222,5 +324,9 @@ function isOverlayName(name){
 
 function isGridName(name){
 	return matches(RGX_GRID,name);
+}
+
+function getNamePrefix(layerName){
+	return layerName.substring(1,layerName.length - 1)
 }
 // --------- /Helpers --------- //

@@ -21,7 +21,7 @@ function cmdExportPageStoryboards(){
 	if (pickedFolderPath){
 		var artboards = getArtboards();
 		artboards.forEach(function(artboard){
-			var baseFilePath = pickedFolderPath + fileName + "-";
+			var baseFilePath = pickedFolderPath + fileName;
 			exportArtboardStories(artboard,baseFilePath);
 
 			doc.showMessage("DONE exporting " + artboard.name() + " storyboard. Preparing next storyboard...");

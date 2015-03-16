@@ -52,7 +52,6 @@ function getFirstVisible(layers){
 // --------- /Sketch Helpers --------- //
 
 // --------- Sketch Save Helpers --------- //
-
 function pickFolder(baseFolder){
 	baseFolder = baseFolder || [@"~/Desktop/" stringByExpandingTildeInPath];
 	var openPanel = [NSOpenPanel openPanel]
@@ -112,15 +111,15 @@ function exportArtboardStories(artboard, baseFilePath){
 
 	storyboard.hideAll();
 
-
 	// export the topStory
 	exportStory(storyboard.topStory,baseFilePath);
 
-	var storyCtx = storyboard.makeNextStoryVisible();
-
-	while (storyCtx){
-		exportStory(storyCtx.story,baseFilePath);
-		storyCtx = storyboard.makeNextStoryVisible();
+	var nextStoryFlatIdx = storyboard.makeNextStoryVisible(0);
+	var story = storyboard.getFlatStoryAt(nextStoryFlatIdx);
+	while (story){
+		exportStory(story,baseFilePath);
+		nextStoryFlatIdx = storyboard.makeNextStoryVisible(nextStoryFlatIdx);
+		story = storyboard.getFlatStoryAt(nextStoryFlatIdx);
 	}
 	
 	storyboard.hideAll();
@@ -132,24 +131,26 @@ function exportStory(story,baseFilePath){
 	var storyboard = story.storyboard;
 	var artboard = storyboard.artboard;
 
+	var storyName = getNamePrefix("" + story.name());
+	log("export.. " + storyName + " " + storyName);
 	// export the top one
-	var fullPath = baseFilePath + story.name() + ".png";
+	var fullPath = baseFilePath + "-" + storyName + ".png";
 	saveArtboard(artboard,fullPath);	
 
 	// export the grid
 	if (storyboard.hasGrid()){
-		fullPath = baseFilePath + "grid-" + story.name() + ".png";
+		fullPath = baseFilePath + "-_grid_-" + storyName + ".png";
 		storyboard.showGrid();
 		saveArtboard(artboard,fullPath);
 		storyboard.hideGrid();
 	}
-
+	
 	// export the overlays
 	if (story.hasOverlays()){
 		story.overlays.forEach(function(overlay){		
 			overlay.setIsVisible(true);
-			var name = overlay.name().substring(1);
-			fullPath = baseFilePath + name + story.name() + ".png";
+			var overlayName = getNamePrefix("" + overlay.name());
+			fullPath = baseFilePath + "-" + overlayName + "-" + storyName + ".png";
 			saveArtboard(artboard,fullPath);
 			overlay.setIsVisible(false);
 		});
