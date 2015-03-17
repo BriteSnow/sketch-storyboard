@@ -29,7 +29,7 @@ function prevStory(){
 	var firstVisibleStoryFlatIdx = storyboard.getFlatIdxOf(firstVisibleStory);
 
 	// since the first story is the topStory (artboard), when not found we have 0 
-	firstVisibleStoryFlatIdx = (firstVisibleStoryFlatIdx === -1)?0:firstVisibleStoryFlatIdx;
+	firstVisibleStoryFlatIdx = (firstVisibleStoryFlatIdx === -1)?storyboard.flatStories.length:firstVisibleStoryFlatIdx;
 
 	var prevFlatIdx = storyboard.makePrevStoryVisible(firstVisibleStoryFlatIdx);
 
