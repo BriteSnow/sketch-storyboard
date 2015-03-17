@@ -95,7 +95,7 @@ function saveArtboard(artboard,fullPath){
 
 	// Hack: Wait to prevent GC to crash
 	COScript.currentCOScript().garbageCollect()
-	[NSThread sleepForTimeInterval:.1]	
+	[NSThread sleepForTimeInterval:.2]	
 }
 
 function in_sandbox(){
