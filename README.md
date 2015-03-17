@@ -50,11 +50,11 @@ The default story files (all variant layers are hidden as well as the ```_grid_`
 - ```taskmanager-spec-03-B-AddTicket.png```
 
 Then, since the 03-A-ProjectList artboard has the special ```_grid_``` layer, a "...-grid-..."" version of all the story layers for this artboard are exported as well. 
-- ```taskmanager-spec-_grid_-02-A-ProjectList.png```
-- ```taskmanager-spec-_grid_-02-B-AddProject.png ```
+- ```taskmanager-spec-GRID-02-A-ProjectList.png```
+- ```taskmanager-spec-GRID-02-B-AddProject.png ```
 
 and finally, the story layers "03-A-ProjectView" and "03-B-AddTicket" has each an "overlay layer" name "-annotations-" and "-overlay-" respetively, which will result in the export of these two additional files: 
-- ```taskmanager-spec-(overlay)-03-A-ProjectView.png``` (contains the -(overlay)- layer)
-- ```taskmanager-spec-(annotations)-03-B-AddTicket.png``` (contains the "-(annotations)-")
+- ```taskmanager-spec-OVERLAY-03-A-ProjectView-(overlay).png``` (contains the -(overlay)- layer)
+- ```taskmanager-spec-OVERLAY-03-B-AddTicket-(annotations).png``` (contains the "-(annotations)-")
 
 

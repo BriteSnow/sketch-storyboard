@@ -139,7 +139,7 @@ function exportStory(story,baseFilePath){
 
 	// export the grid
 	if (storyboard.hasGrid()){
-		fullPath = baseFilePath + "-_grid_-" + storyName + ".png";
+		fullPath = baseFilePath + "-GRID-" + storyName + ".png";
 		storyboard.showGrid();
 		saveArtboard(artboard,fullPath);
 		storyboard.hideGrid();
@@ -150,7 +150,7 @@ function exportStory(story,baseFilePath){
 		story.overlays.forEach(function(overlay){		
 			overlay.setIsVisible(true);
 			var overlayName = getNamePrefix("" + overlay.name());
-			fullPath = baseFilePath + "-" + overlayName + "-" + storyName + ".png";
+			fullPath = baseFilePath + "-OVERLAY-" + storyName + "-" + overlayName + ".png";
 			saveArtboard(artboard,fullPath);
 			overlay.setIsVisible(false);
 		});
