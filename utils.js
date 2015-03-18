@@ -132,7 +132,7 @@ function exportStory(story,baseFilePath){
 	var artboard = storyboard.artboard;
 
 	var storyName = getNamePrefix("" + story.name());
-	log("export.. " + storyName + " " + storyName);
+	//log("export.. " + storyName + " " + storyName);
 	// export the top one
 	var fullPath = baseFilePath + "-" + storyName + ".png";
 	saveArtboard(artboard,fullPath);	
@@ -166,6 +166,24 @@ function matches(rgx,name){
 	var r = rgx.exec(name)
 	return (r != null)?true:false;
 }
+
+function sortByStories(list){
+	return list.sort(function(a,b){
+		var aName = a.name();
+		var bName = b.name();
+		if (aName === bName){
+			if (b.parentStory === a){
+				return -1;
+			}else{
+				return 1;
+			}
+		}else{
+			return a.name() > b.name() ? 1 : -1;	
+		}
+		
+	});
+}
+
 
 function sortByName(list){
 	return list.sort(function(a,b){

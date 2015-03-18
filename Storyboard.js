@@ -13,7 +13,8 @@ function Storyboard(artboard){
 		this.topStory = new Story(this,this.artboard,null);
 		this.storyCount++;
 		this.topStory.init();
-		this.flatStories = sortByName(this.flatStories);
+		// this.flatStories = sortByName(this.flatStories);
+		this.flatStories = sortByStories(this.flatStories);
 	};
 
 	Storyboard.prototype.addFlatStory = function(story){

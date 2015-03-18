@@ -22,7 +22,6 @@ function nextStory(){
 	var nextIdx = 0, nextStory = null;
 
 	var firstVisibleStoryFlatIdx = storyboard.getFlatIdxOf(firstVisibleStory);
-	log("firstVisibleStoryFlatIdx " + firstVisibleStoryFlatIdx);
 
 	// since the first story is the topStory (artboard), when not found we have 0 
 	firstVisibleStoryFlatIdx = (firstVisibleStoryFlatIdx === -1)?0:firstVisibleStoryFlatIdx;
