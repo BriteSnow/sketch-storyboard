@@ -58,3 +58,21 @@ and finally, the story layers "03-A-ProjectView" and "03-B-AddTicket" has each a
 - ```taskmanager-spec-OVERLAY-03-B-AddTicket-(annotations).png``` (contains the "-(annotations)-")
 
 
+## Possible issue of empty exports
+
+Sometime, there might be an issue when exporting at valid artboard/storyboard with many stories does not export any files even if it says it exported many. 
+
+This can come from two things: 
+
+1) Make sure you do not have spaces or special characters in your folder path of file names. "-" are ok. 
+
+2) Could be a weird OSX Sandbox issues, and the best way is to reinstall the application. 
+    
+    - a) Shutdown sketch 
+    - b) Delete the folder /Users/your_user_name/Containers/com.bohemiancoding.sketch3
+    - c) Delete the Sketch.app in Applications folder
+    - d) Open App Store, go to Purchases tab, search for sketch, and click on install
+    - e) Launch Sketch.app from Applications folder
+    - f) Reinstall plugins with Sketch Toolbox (you might have to "uninstall" and "install" them as Sketch Toolbox keeps its own cache of what was installed)
+    - g) Now, export should work. 
+
