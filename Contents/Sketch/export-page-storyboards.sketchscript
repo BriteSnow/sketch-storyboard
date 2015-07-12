@@ -1,14 +1,14 @@
 // jshint ignore: start
-#import 'utils.js'
+@import 'utils.js'
 
-// log("--");
-// log("2. Export Page Storyboards " + [@"~/" stringByExpandingTildeInPath]);
 
-cmdExportPageStoryboards();
+function onRun(context){
+	cmdExportPageStoryboards(context);
+}
 
-function cmdExportPageStoryboards(){
-	var artboard = getCurrentArtboard();
 
+function cmdExportPageStoryboards(context){
+	var doc = context.document; 
 
 	var fileDisplayName = [doc displayName];
 	var currentFilePath = [[doc fileURL] path];
@@ -19,10 +19,10 @@ function cmdExportPageStoryboards(){
 
 	var pickedFolderPath = pickFolder(fileFolder);
 	if (pickedFolderPath){
-		var artboards = getArtboards();
+		var artboards = getArtboards(doc);
 		artboards.forEach(function(artboard){
 			var baseFilePath = pickedFolderPath + fileName;
-			exportArtboardStories(artboard,baseFilePath);
+			exportArtboardStories(doc, artboard,baseFilePath);
 
 			doc.showMessage("DONE exporting " + artboard.name() + " storyboard. Preparing next storyboard...");
 			COScript.currentCOScript().garbageCollect()

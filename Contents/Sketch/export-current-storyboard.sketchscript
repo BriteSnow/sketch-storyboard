@@ -1,13 +1,17 @@
 // jshint ignore: start
-#import 'utils.js'
+@import 'utils.js'
 
 // log("--");
 // log("1. Export Current Storyboard " + [@"~/" stringByExpandingTildeInPath]);
 
-cmdExportCurrentStoryboard();
+function onRun(context){	
+	cmdExportCurrentStoryboard(context);
+}
 
-function cmdExportCurrentStoryboard(){
-	var artboard = getCurrentArtboard();
+function cmdExportCurrentStoryboard(context){
+
+	var artboard = getCurrentArtboard(context);	
+	var doc = context.document;
 
 	// check that we have a current artboard
 	if (!artboard){
@@ -23,7 +27,7 @@ function cmdExportCurrentStoryboard(){
 	var pickedFolderPath = pickFolder(fileFolder);
 	if (pickedFolderPath){
 		var baseFilePath = pickedFolderPath + fileName;
-		exportArtboardStories(artboard,baseFilePath);	
+		exportArtboardStories(doc, artboard, baseFilePath);	
 		doc.showMessage("DONE exporting " + artboard.name() + " storyboard.");
 	}
 }

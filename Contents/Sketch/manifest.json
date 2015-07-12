@@ -1,0 +1,48 @@
+{
+  "name": "Sketch Storyboard",
+  "description": "A measure tool for measurements & design specs.",
+  "author": "jeremychone",
+  "homepage": "https://github.com/BriteSnow/sketch-storyboard",
+  "version": "0.8.0",
+  "identifier": "com.britesnow.sketch-storyboard",
+  "compatibleVersion": "3.3.2",
+  "bundleVersion": 1,
+  "commands": [{
+    "name": "Export Current Storyboard",
+    "identifier": "britesnow-export-current-storyboard",
+    "shortcut": "cmd ctrl E",
+    "script": "export-current-storyboard.sketchscript"
+  },
+  {
+    "name": "Export Page Storyboards",
+    "shortcut": "cmd ctrl A",
+    "identifier": "britesnow-export-page-storyboards",
+    "script": "export-page-storyboards.sketchscript"
+  },
+  {
+    "name": "Prev Story",
+    "identifier": "britesnow-prev-story",
+    "shortcut": "cmd ctrl P",
+    "script": "prev-story.sketchscript"
+  },
+  {
+    "name": "Next Story",
+    "identifier": "britesnow-next-story",
+    "shortcut": "cmd ctrl N",
+    "script": "next-story.sketchscript"
+  } 
+  ],
+  "menu": {
+    "title": "Storyboard",
+    "items":[
+      "britesnow-export-current-storyboard",
+      "britesnow-next-story",
+      "britesnow-export-page-storyboards",
+      "britesnow-prev-story",
+
+      
+      
+    ]
+
+  }
+}

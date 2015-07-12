@@ -1,16 +1,15 @@
 // jshint ignore: start
-#import 'utils.js'
+@import 'utils.js'
 
-// log("--");
-// log("3. Prev Story");
-
-var currentArtboard = getCurrentArtboard();
-
-
-prevStory();
+function onRun(context){	
+	prevStory(context);
+}
 
 
-function prevStory(){
+function prevStory(context){
+	var currentArtboard = getCurrentArtboard(context);	
+	var doc = context.document;
+
 	// if no artboard, just show and return
 	if (currentArtboard === null){
 		[doc showMessage:"No Artboard selected, please, select one"];

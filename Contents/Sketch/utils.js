@@ -1,10 +1,10 @@
 // jshint ignore: start
 
-#import 'sandbox.js'
-#import 'Storyboard.js'
+@import 'sandbox.js'
+@import 'Storyboard.js'
 
 // --------- Sketch Helpers --------- //
-function getArtboards(){
+function getArtboards(doc){	
 	var currentPage = [doc currentPage]
 
 	var artboard_array = [currentPage artboards]
@@ -21,14 +21,12 @@ function getArtboards(){
 	return sortByName(artboards);
 }
 
-function getCurrentArtboard(){
-	var page = [doc currentPage]
-	var current = [page currentArtboard]
-	return current;
+function getCurrentArtboard(context){
+	return context.document.currentPage().currentArtboard()
 }
 
 // return the current arboard if one selected, or null
-function getSelectedArtboard(){
+function getSelectedArtboard(doc){
 	var page = [doc currentPage]
 	var current = [page currentArtboard]
 	if (current != null && current.isSelected() === 1){
@@ -75,7 +73,7 @@ function pickFolder(baseFolder){
 	}
 }
 
-function saveArtboard(artboard,fullPath){
+function saveArtboard(doc, artboard,fullPath){
 
 	if (in_sandbox()) {
 	  var sandboxAccess = AppSandboxFileAccess.init({
@@ -105,19 +103,20 @@ function in_sandbox(){
 // --------- /Sketch Save Helpers --------- //
 
 // --------- Storyboard Export Methods --------- //
-function exportArtboardStories(artboard, baseFilePath){
+function exportArtboardStories(doc, artboard, baseFilePath){	
 	var storyboard = new Storyboard(artboard);
+	
 	storyboard.init();
 
 	storyboard.hideAll();
-
+	
 	// export the topStory
-	exportStory(storyboard.topStory,baseFilePath);
+	exportStory(doc, storyboard.topStory,baseFilePath);
 
 	var nextStoryFlatIdx = storyboard.makeNextStoryVisible(0);
 	var story = storyboard.getFlatStoryAt(nextStoryFlatIdx);
 	while (story){
-		exportStory(story,baseFilePath);
+		exportStory(doc, story,baseFilePath);
 		nextStoryFlatIdx = storyboard.makeNextStoryVisible(nextStoryFlatIdx);
 		story = storyboard.getFlatStoryAt(nextStoryFlatIdx);
 	}
@@ -125,23 +124,23 @@ function exportArtboardStories(artboard, baseFilePath){
 	storyboard.hideAll();
 }
 
-function exportStory(story,baseFilePath){
+function exportStory(doc, story, baseFilePath){
 	story.hideAll();
-
 	var storyboard = story.storyboard;
 	var artboard = storyboard.artboard;
 
 	var storyName = getNamePrefix("" + story.name());
+
 	//log("export.. " + storyName + " " + storyName);
 	// export the top one
 	var fullPath = baseFilePath + "-" + storyName + ".png";
-	saveArtboard(artboard,fullPath);	
+	saveArtboard(doc, artboard,fullPath);	
 
 	// export the grid
 	if (storyboard.hasGrid()){
 		fullPath = baseFilePath + "-GRID-" + storyName + ".png";
 		storyboard.showGrid();
-		saveArtboard(artboard,fullPath);
+		saveArtboard(doc, artboard,fullPath);
 		storyboard.hideGrid();
 	}
 	
@@ -151,7 +150,7 @@ function exportStory(story,baseFilePath){
 			overlay.setIsVisible(true);
 			var overlayName = getNamePrefix("" + overlay.name());
 			fullPath = baseFilePath + "-OVERLAY-" + storyName + "-" + overlayName + ".png";
-			saveArtboard(artboard,fullPath);
+			saveArtboard(doc, artboard,fullPath);
 			overlay.setIsVisible(false);
 		});
 	}
