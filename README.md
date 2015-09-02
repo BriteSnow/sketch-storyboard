@@ -1,8 +1,24 @@
-### About
+
+## About
 
 Sketch Storyboard is a Sketch plugin which turns your sketch Artboards into Storyboards that can be easily exported as a set of .pngs or looped through via the plugin menus "Next Story" and "Prev Story." Everything is based on group layer naming convention, and support "Story Layers" as well as "Overlay Layers" concepts.
 
-## Install
+## Sketch Toolbox (Recommended)
+
+- Download & Install [Sketch Toolbox](http://sketchtoolbox.com/)
+- Start Sketch Toolbox
+- Search for "Storyboard"
+- Click Install
+
+### To update via Sketch Toolbox
+
+- Shutdown Sketch (just to be safe)
+- Start Sketch Toolbox 
+- Click on "Installed"
+- Click Uninstall for Sketch Storyboard
+- Then Click Install again.
+
+## Manual Install
 
 - Download and Unzip [sketch-storyboard-master.zip](https://github.com/BriteSnow/sketch-storyboard/archive/master.zip)
 - rename the unzipped folder to "Sketch Storyboard"
