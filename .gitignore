@@ -4,6 +4,8 @@
 # Distribution folder
 dist/
 
+dev/
+
 # Ignore sublime text files
 *.sublime-project
 *.sublime-workspace
