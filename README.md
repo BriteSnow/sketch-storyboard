@@ -9,15 +9,29 @@ Sketch Storyboard is a Sketch plugin which turns your sketch Artboards into Stor
 - Move the "Sketch Storyboard" folder into the Sketch Plugins folder (To find your Sketch folder, in Sketch menu, go to: "Plugins > Reveal Plugins Folder...")
 - Now, in Sketch, you should see "Plugins > Sketch Storyboard > 0. Story Export"
 
-
 ### Concept
+
+This plugins is driven by a layer naming convention. "Special" layers start and end with "-". 
 
 - Naming convention is designed to alphabatically ordered. 
 - Artboards are the main screens or "top story layer", and can have sub "story layers" (each will be exported in separate pngs files)
 - Each "story layer" will result in at least one png. Sub story layers will be hidden, and shown one by one before export.
-- "story layers" are named with the following format ```-01-A-Any Name-``` so, -[two digits]-[any name]- 
-- The "top story layer" (i.e. the artboard one) can have a special ```-_grid_-``` layer, which if present, will be exported in a separate "...-_grid_-...png" file and with all the eventual "overlay layers". 
+- "story layers" are named with the following format ```-01-A-Any Name-``` so, -[two or more digits]-[any name]- 
+- The "top story layer" (i.e. the artboard one) can have a special ```-_grid_-``` layer, which if present, will be exported in a separate "...-GRID-...png" file. 
 - Any "story layer" can have a zero or more "overlay layers" that starts and start with "-(" and end with ")-" for example ```-(annotations)-``` , which will also result in a separate png with the parent story layer active (it will get hidden for the other export)
+
+### Shortcuts
+
+When a artboard that have "story layers" is selected, you can use the following command to navigate and export a storyboard.
+
+- CMD CTRL P (for previous story)
+- CMD CTRL N (for next story)
+- CMD CTRL E (export current storyboard, an artboard/storyboard must be selected)
+
+Global command (does not require to select a storyboard)
+
+- CMD CTRL A (export all storyboard from page)
+
 
 ### Example
 
@@ -60,7 +74,7 @@ and finally, the story layers "03-A-ProjectView" and "03-B-AddTicket" has each a
 
 ## Possible issue of empty exports
 
-Sometime, there might be an issue when exporting at valid artboard/storyboard with many stories does not export any files even if it says it exported many. 
+Sometime, there might be an issue when exporting at valid artboard/storyboard with many stories does not export any files even if it displayed it did. 
 
 This can come from two things: 
 
