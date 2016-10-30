@@ -1,5 +1,6 @@
 // jshint ignore: start
 @import 'utils.js'
+@import 'utils-export.js'
 
 // log("--");
 // log("1. Export Current Storyboard " + [@"~/" stringByExpandingTildeInPath]);
@@ -26,7 +27,8 @@ function cmdExportCurrentStoryboard(context){
 
 	var pickedFolderPath = pickFolder(fileFolder);
 	if (pickedFolderPath){
-		var baseFilePath = pickedFolderPath + fileName;
+		//var baseFilePath = pickedFolderPath + fileName;
+		var baseFilePath = pickedFolderPath;
 		exportArtboardStories(doc, artboard, baseFilePath);	
 		doc.showMessage("DONE exporting " + artboard.name() + " storyboard.");
 	}

@@ -1,5 +1,4 @@
 // jshint ignore: start
-
 @import 'sandbox.js'
 @import 'Storyboard.js'
 
@@ -49,120 +48,14 @@ function getFirstVisible(layers){
 }
 // --------- /Sketch Helpers --------- //
 
-// --------- Sketch Save Helpers --------- //
-function pickFolder(baseFolder){
-	baseFolder = baseFolder || [@"~/Desktop/" stringByExpandingTildeInPath];
-	var openPanel = [NSOpenPanel openPanel]
-
-	openPanel.setCanChooseDirectories(true);
-	openPanel.setCanChooseFiles(false);
-	openPanel.setCanCreateDirectories(true);
-	openPanel.setDirectoryURL([NSURL fileURLWithPath:baseFolder]);
-	openPanel.setAllowsMultipleSelection(false);
-	openPanel.setTitle("Choose a directory!");
-	openPanel.setPrompt("Choose");
-	// openPanel.ok(function(){
-	// 	log("OK.....")
-	// })
-	var button = openPanel.runModal();
-	if (button == NSFileHandlingPanelOKButton){
-		var url = "" + openPanel.URLs()[0];
-		return url.substring(7);
-	}else{
-		return null;
-	}
-}
-
-function saveArtboard(doc, artboard,fullPath){
-
-	if (in_sandbox()) {
-	  var sandboxAccess = AppSandboxFileAccess.init({
-	    message: "Please authorize Sketch to write to this folder. You will only need to do this once per folder.",
-	    prompt:  "Authorize",
-	    title: "Sketch Authorization"
-	  });
-	  sandboxAccess.accessFilePath_withBlock_persistPermission(fullPath, function(){
-	    [doc saveArtboardOrSlice:artboard toFile:fullPath];
-	  }, true);
-	} else {
-	  [doc saveArtboardOrSlice:artboard toFile:fullPath];
-	}
-
-
-	[doc showMessage:"Saved as " + fullPath];
-
-	// Hack: Wait to prevent GC to crash
-	COScript.currentCOScript().garbageCollect()
-	[NSThread sleepForTimeInterval:.2]	
-}
-
-function in_sandbox(){
-  var environ = [[NSProcessInfo processInfo] environment];
-  return (nil != [environ objectForKey:@"APP_SANDBOX_CONTAINER_ID"]);
-}
-// --------- /Sketch Save Helpers --------- //
-
-// --------- Storyboard Export Methods --------- //
-function exportArtboardStories(doc, artboard, baseFilePath){	
-	var storyboard = new Storyboard(artboard);
-	
-	storyboard.init();
-
-	storyboard.hideAll();
-	
-	// export the topStory
-	exportStory(doc, storyboard.topStory,baseFilePath);
-
-	var nextStoryFlatIdx = storyboard.makeNextStoryVisible(0);
-	var story = storyboard.getFlatStoryAt(nextStoryFlatIdx);
-	while (story){
-		exportStory(doc, story,baseFilePath);
-		nextStoryFlatIdx = storyboard.makeNextStoryVisible(nextStoryFlatIdx);
-		story = storyboard.getFlatStoryAt(nextStoryFlatIdx);
-	}
-	
-	storyboard.hideAll();
-}
-
-function exportStory(doc, story, baseFilePath){
-	story.hideAll();
-	var storyboard = story.storyboard;
-	var artboard = storyboard.artboard;
-
-	var storyName = getNamePrefix("" + story.name());
-
-	//log("export.. " + storyName + " " + storyName);
-	// export the top one
-	var fullPath = baseFilePath + "-" + storyName + ".png";
-	saveArtboard(doc, artboard,fullPath);	
-
-	// export the grid
-	if (storyboard.hasGrid()){
-		fullPath = baseFilePath + "-GRID-" + storyName + ".png";
-		storyboard.showGrid();
-		saveArtboard(doc, artboard,fullPath);
-		storyboard.hideGrid();
-	}
-	
-	// export the overlays
-	if (story.hasOverlays()){
-		story.overlays.forEach(function(overlay){		
-			overlay.setIsVisible(true);
-			var overlayName = getNamePrefix("" + overlay.name());
-			fullPath = baseFilePath + "-OVERLAY-" + storyName + "-" + overlayName + ".png";
-			saveArtboard(doc, artboard,fullPath);
-			overlay.setIsVisible(false);
-		});
-	}
-
-	
-}
-// --------- /Storyboard Export Methods --------- //
-
 
 // --------- JS Utils --------- //
+function pad(num, width){
+	return Array(Math.max(width - String(num).length + 1, 0)).join("0") + num;
+}
+
 function matches(rgx,name){
-	var r = rgx.exec(name)
+	var r = rgx.exec(name);
 	return (r != null)?true:false;
 }
 

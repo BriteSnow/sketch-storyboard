@@ -1,14 +1,11 @@
 @import 'utils.js'; // eslint-disable-line
+@import 'utils-export.js'; // eslint-disable-line
 
 
 function onRun(context){
-	nextStory(context);
-}
-
-function nextStory(context){
+	log(">>> test.onRun ");
 	var currentArtboard = getCurrentArtboard(context);	
-	var doc = context.document;
-
+	var doc = context.document;	
 	// if no artboard, just show and return
 	if (currentArtboard === null){
 		doc.showMessage("No Artboard selected, please, select one");
@@ -17,9 +14,11 @@ function nextStory(context){
 
 	var storyboard = new Storyboard(currentArtboard);
 	storyboard.init();
+	
+	var logs = exportArtboardStories(doc, currentArtboard, "./", true);	
+	log("test exportArtboardStories " + logs.length + " " + logs.join(" | "));
 
-	var firstVisibleStory = storyboard.findFirstVisibleStory();
-	var idx = (firstVisibleStory != null)?firstVisibleStory.idx:-1
 
-	storyboard.makeNextStoryVisible(idx);
+	log("Test " + storyboard);
 }
+

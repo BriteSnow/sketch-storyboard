@@ -1,9 +1,9 @@
 {
   "name": "Sketch Storyboard",
-  "description": "A measure tool for measurements & design specs.",
+  "description": "Turning your artboard into a storyboard.",
   "author": "jeremychone",
   "homepage": "https://github.com/BriteSnow/sketch-storyboard",
-  "version": "0.8.0",
+  "version": "0.9.0-SNAPSHOT",
   "identifier": "com.britesnow.sketch-storyboard",
   "compatibleVersion": "3.3.2",
   "bundleVersion": 1,
@@ -14,10 +14,10 @@
     "script": "export-current-storyboard.sketchscript"
   },
   {
-    "name": "Export Page Storyboards",
-    "shortcut": "cmd ctrl A",
-    "identifier": "britesnow-export-page-storyboards",
-    "script": "export-page-storyboards.sketchscript"
+    "name": "Next Story",
+    "identifier": "britesnow-next-story",
+    "shortcut": "cmd ctrl N",
+    "script": "next-story.sketchscript"
   },
   {
     "name": "Prev Story",
@@ -26,19 +26,26 @@
     "script": "prev-story.sketchscript"
   },
   {
-    "name": "Next Story",
-    "identifier": "britesnow-next-story",
-    "shortcut": "cmd ctrl N",
-    "script": "next-story.sketchscript"
-  } 
+    "name": "Next Step",
+    "identifier": "britesnow-next-step",
+    "shortcut": "cmd ctrl shift N",
+    "script": "next-step.sketchscript"
+  },
+  {
+    "name": "Prev Step",
+    "identifier": "britesnow-prev-step",
+    "shortcut": "cmd ctrl shift P",
+    "script": "prev-step.sketchscript"
+  }
   ],
   "menu": {
     "title": "Storyboard",
     "items":[
       "britesnow-export-current-storyboard",
       "britesnow-next-story",
-      "britesnow-export-page-storyboards",
       "britesnow-prev-story",
+      "britesnow-next-step",
+      "britesnow-prev-step"
     ]
 
   }

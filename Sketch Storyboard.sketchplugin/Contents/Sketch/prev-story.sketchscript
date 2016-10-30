@@ -18,18 +18,9 @@ function prevStory(context){
 
 	var storyboard = new Storyboard(currentArtboard);
 	storyboard.init();
-	// log("storyboard storyCount: " + storyboard.storyCount);
-	// log("storyboard overlayCount: " + storyboard.overlayCount);
-
 
 	var firstVisibleStory = storyboard.findFirstVisibleStory();
-	var prevIdx = 0, prevStory = null;
+	var idx = (firstVisibleStory != null && !firstVisibleStory.isArtboard())?firstVisibleStory.idx:storyboard.stories.length
 
-	var firstVisibleStoryFlatIdx = storyboard.getFlatIdxOf(firstVisibleStory);
-
-	// since the first story is the topStory (artboard), when not found we have 0 
-	firstVisibleStoryFlatIdx = (firstVisibleStoryFlatIdx === -1)?storyboard.flatStories.length:firstVisibleStoryFlatIdx;
-
-	var prevFlatIdx = storyboard.makePrevStoryVisible(firstVisibleStoryFlatIdx);
-
+	storyboard.makePrevStoryVisible(idx);
 }

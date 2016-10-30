@@ -1,0 +1,37 @@
+@import 'utils.js'; // eslint-disable-line
+
+
+function onRun(context){
+	nextStep(context);
+}
+
+function nextStep(context){
+	var currentArtboard = getCurrentArtboard(context);	
+	var doc = context.document;
+
+	// if no artboard, just show and return
+	if (currentArtboard === null){
+		doc.showMessage("No Artboard selected, please, select one");
+		return;
+	}
+
+	var storyboard = new Storyboard(currentArtboard);
+	storyboard.init();
+
+	var firstVisibleStory = storyboard.findFirstVisibleStory();	
+
+	// first check if we need to loop through overlays
+	if (firstVisibleStory && firstVisibleStory.hasOverlays()){
+		var overlayIdx = firstVisibleStory.getFirstVisibleOverlayIndex();
+		// if we still have overlay to show
+		if (overlayIdx < firstVisibleStory.overlays.length - 1){
+			firstVisibleStory.hideAllOverlaysBut(overlayIdx + 1);
+			return;
+		}
+	}
+
+	// if we get here, need to show the next story
+	var idx = (firstVisibleStory != null)?firstVisibleStory.idx:-1
+	storyboard.makeNextStoryVisible(idx);
+
+}
