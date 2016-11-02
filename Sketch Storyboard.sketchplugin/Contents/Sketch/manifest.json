@@ -3,7 +3,7 @@
   "description": "Turning your artboard into a storyboard.",
   "author": "jeremychone",
   "homepage": "https://github.com/BriteSnow/sketch-storyboard",
-  "version": "0.9.0-SNAPSHOT",
+  "version": "0.9.0",
   "identifier": "com.britesnow.sketch-storyboard",
   "compatibleVersion": "3.3.2",
   "bundleVersion": 1,
