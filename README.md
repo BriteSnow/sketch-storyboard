@@ -5,29 +5,19 @@ Sketch Storyboard is a Sketch plugin which turns your sketch Artboards into Stor
 
 **IMPORTANT** The version 0.9.0 dramatically simplified the naming convention, see below the migration steps. 
 
-## Sketch Toolbox (Recommended)
+## Install
 
-- Download & Install [Sketch Toolbox](http://sketchtoolbox.com/)
-- Start Sketch Toolbox
-- Search for "Storyboard"
-- Click Install
-
-### To update via Sketch Toolbox
-
-- Shutdown Sketch (just to be safe)
-- Start Sketch Toolbox 
-- Click on "Installed"
-- Click Uninstall for Sketch Storyboard
-- Then Click Install again.
-
-## Manual Install
 
 - Download and Unzip [sketch-storyboard-master.zip](https://github.com/BriteSnow/sketch-storyboard/archive/master.zip)
-- rename the unzipped folder to "Sketch Storyboard"
-- Move the "Sketch Storyboard" folder into the Sketch Plugins folder (To find your Sketch folder, in Sketch menu, go to: "Plugins > Reveal Plugins Folder...")
-- Now, in Sketch, you should see "Plugins > Sketch Storyboard > 0. Story Export"
+- under `sketch-storyboard-master/` **double click** on **Sketch Storyboard.sketchplugin** (that should install it)
 
-### Concept & Instructions
+or 
+
+- Via Sketch Toolbox (search for "storyboard")
+
+_Note: Make sure to check for update once in a while (e.g., monthly)_
+
+## Concept & Instructions
 
  This plugins allows your to "flag" some layers as story layers, annotation layers, so that you can flip through them easily. 
 
@@ -50,7 +40,7 @@ Open Demo/Example [sketch-storyboard-demo.sketch](http://files.britesnow.com/ske
 
 You can also export all of those "steps" by doing a `cmd ctrl E`
 
-#### Exporting 
+## Exporting 
 Exporting **Mickey-Simple**
 ![Sketch-Storyboard Doc 01](http://files.britesnow.com/sketch-storyboard/sketch-storyboard-doc-01.png)
 
@@ -82,13 +72,13 @@ Will generate:
 - `Mickey-Advanced-GRID-06-C.png`
 
 
-### Next Features
+## Next Features
 
 - Follow the artboard export settings to export each story/annotation/grid
 - Add `cmd ctrl S` to toggle layer as story layer (will just add/remove the leading `>`)
 - Add `cmd ctrl A` to toggler a lyer as an annotation layer (will just add/remove the `()`)
 
-### Legacy naming upgrade
+## Legacy naming upgrade
 
 Prior to 0.9.0, the naming convention was relatively cryptic and was relying on the user to name the story layers in a orderly fashion. 0.9.0 dramatically simplify this as it automatically index the stories based on their layer order.
 
