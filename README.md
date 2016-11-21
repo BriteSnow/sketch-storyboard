@@ -41,7 +41,8 @@ Open Demo/Example [sketch-storyboard-demo.sketch](http://files.britesnow.com/ske
 You can also export all of those "steps" by doing a `cmd ctrl E`
 
 ## Exporting 
-Exporting **Mickey-Simple**
+
+#### Exporting `Mickey-Simple`
 ![Sketch-Storyboard Doc 01](http://files.britesnow.com/sketch-storyboard/sketch-storyboard-doc-01.png)
 
 Will generate: 
@@ -51,7 +52,7 @@ Will generate:
 - `Mickey-Simple-02-B+(annotation).png`
 - `Mickey-Simple-03-C.png`
 
-Exporting **Mickey-Advanced**
+#### Exporting `Mickey-Advanced`
 ![Sketch-Storyboard Doc 01](http://files.britesnow.com/sketch-storyboard/sketch-storyboard-doc-02.png)
 
 Will generate:
@@ -70,6 +71,24 @@ Will generate:
 - `Mickey-Advanced-GRID-04-B.1.png`
 - `Mickey-Advanced-GRID-05-B.2.png`
 - `Mickey-Advanced-GRID-06-C.png`
+
+#### Exporting `Mickey-Simple-With-Exports`
+You can also add exports setting per artboard and the stories export will follow those settings. 
+
+So, assumeing the "Mickey-Simple above" with two export settings `1x scale, "" suffix, and .png format` and `2x scale, "@2x" suffix, and .png format`, the export will be:
+
+- `Mickey-Simple-With-Exports-00.png`
+- `Mickey-Simple-With-Exports-01-A.png`
+- `Mickey-Simple-With-Exports-02-B.png`
+- `Mickey-Simple-With-Exports-02-B+(annotation).png`
+- `Mickey-Simple-With-Exports-03-C.png`
+- `Mickey-Simple-With-Exports@2x-00.png`
+- `Mickey-Simple-With-Exports@2x-01-A.png`
+- `Mickey-Simple-With-Exports@2x-02-B.png`
+- `Mickey-Simple-With-Exports@2x-03-C.png`
+
+Note that the grid and annotation export won't follow the export settings and will be exported 1x, png, and no suffix. 
+
 
 
 ## Next Features
