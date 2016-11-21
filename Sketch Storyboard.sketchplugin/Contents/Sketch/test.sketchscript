@@ -16,9 +16,38 @@ function onRun(context){
 	storyboard.init();
 	
 	var logs = exportArtboardStories(doc, currentArtboard, "./", true);	
-	log("test exportArtboardStories " + logs.length + " " + logs.join(" | "));
+	log("---- TEST export artboards: " + logs.length)
+	log(logs.join(" | "));
+
+	log("---- Test storyboard: ");
+	log("" + storyboard);
+
+	log("---- Test fileFolder: ");
+	var fileDisplayName = [doc displayName];
+	var currentFilePath = [[doc fileURL] path];
+	var fileFolder = currentFilePath.split(fileDisplayName)[0];
+	log("" + fileFolder);
+
+	// var slices = MSSliceMaker.slicesFromExportableLayer(currentArtboard);
+	// log("---- Test slices: ");
+	// log(""+ slices);
+	// log("---- Test slices: ");
+	// var slices = MSExportRequest.exportRequestsFromExportableLayer(currentArtboard);
+
+	// // var tmpHackExport = currentArtboard.exportOptions().addExportFormat();	
+	// log("slices.length " + slices.length);
+
+	// var i = 0, l = slices.length, slice, filePath;
+	// for (; i < l ; i++){
+	// 	slice = slices[i];
+	// 	filePath = fileFolder + slice.name() + "." + slice.format();
+	// 	log("exporting " + slice.name() + " scale:" + slice.scale() + " format: " + slice.format());
+	// 	doc.saveArtboardOrSlice_toFile(slice, filePath);		
+	// }
 
 
-	log("Test " + storyboard);
+  
+
+
 }
 

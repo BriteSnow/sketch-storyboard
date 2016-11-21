@@ -3,7 +3,7 @@
   "description": "Turning your artboard into a storyboard.",
   "author": "jeremychone",
   "homepage": "https://github.com/BriteSnow/sketch-storyboard",
-  "version": "0.9.0",
+  "version": "0.9.1-SNAPSHOT",
   "identifier": "com.britesnow.sketch-storyboard",
   "compatibleVersion": "3.3.2",
   "bundleVersion": 1,
@@ -36,7 +36,13 @@
     "identifier": "britesnow-prev-step",
     "shortcut": "cmd ctrl shift P",
     "script": "prev-step.sketchscript"
-  }
+  },
+  {
+    "name": "Test",
+    "identifier": "britesnow-test",
+    "shortcut": "cmd ctrl T",
+    "script": "test.sketchscript"
+  }  
   ],
   "menu": {
     "title": "Storyboard",
@@ -45,7 +51,8 @@
       "britesnow-next-story",
       "britesnow-prev-story",
       "britesnow-next-step",
-      "britesnow-prev-step"
+      "britesnow-prev-step", 
+      "britesnow-test"
     ]
 
   }

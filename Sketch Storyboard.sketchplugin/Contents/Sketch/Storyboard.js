@@ -244,13 +244,28 @@ function Story(storyboard,layer,parentStory){
 
 (function(){
 
-	Story.prototype.name = function(){
+	Story.prototype.name = function(){		
 		return getLayerName(this.layer);
 	};
 
 	Story.prototype.isArtboard = function(){
 		return this._isArtboard;
 	};
+
+	Story.prototype.getSuffixName = function(){
+		// if artboard, then, no suffixName
+		if (this.isArtboard()){
+			return "";
+		}
+
+		var name = this.name();		
+		// remove the eventual ">"
+		if (name.indexOf(">") === 0){
+			name = name.substring(1);
+		}
+		
+		return name;
+	}
 
 	Story.prototype.getGrid = function(){
 		return this.grid || this.storyboard.grid;
@@ -359,7 +374,8 @@ function getLayers(layer){
 }
 
 function getLayerName(layer){
-	return "" + layer.name();
+	var name = "" + layer.name();
+	return name.trim();
 }
 
 //var RGX_STORY_PREFIX = /^(-\d)\d\d*-.*-$/;

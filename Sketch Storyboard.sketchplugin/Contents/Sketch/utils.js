@@ -50,6 +50,13 @@ function getFirstVisible(layers){
 
 
 // --------- JS Utils --------- //
+function getCleanStoryName(artboardName){
+	if (artboardName.indexOf(">") === 0){
+		artboardName = artboardName.substring(1);
+	}
+	return artboardName.trim();
+}
+
 function pad(num, width){
 	return Array(Math.max(width - String(num).length + 1, 0)).join("0") + num;
 }
