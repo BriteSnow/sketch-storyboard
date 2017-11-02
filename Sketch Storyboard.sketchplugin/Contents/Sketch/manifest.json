@@ -3,9 +3,10 @@
   "description": "Turning your artboard into a storyboard.",
   "author": "jeremychone",
   "homepage": "https://github.com/BriteSnow/sketch-storyboard",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "identifier": "com.britesnow.sketch-storyboard",
   "compatibleVersion": "3.3.2",
+  "appcast": "https://raw.githubusercontent.com/BriteSnow/sketch-storyboard/master/appcast.xml",
   "bundleVersion": 1,
   "commands": [{
     "name": "Export Current Storyboard",

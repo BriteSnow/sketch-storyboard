@@ -7,15 +7,15 @@ Sketch Storyboard is a Sketch plugin which turns your sketch Artboards into Stor
 
 ## Install
 
+**Latest version:** 0.9.2
 
-- Download and Unzip [sketch-storyboard-master.zip](https://github.com/BriteSnow/sketch-storyboard/archive/master.zip)
-- under `sketch-storyboard-master/` **double click** on **Sketch Storyboard.sketchplugin** (that should install it)
+**Initial install:**
+- Download and Unzip [sketch-storyboard-v-0.9.2.zip](https://github.com/BriteSnow/sketch-storyboard/archive/v-0.9.2.zip)
+- Unzip and double click on  **Sketch Storyboard.sketchplugin** (that should install it)
 
-or 
-
-- Via Sketch Toolbox (search for "storyboard")
-
-_Note: Make sure to check for update once in a while (e.g., monthly)_
+**Updates**
+- As of v-0.9.2, Sketch Storyboard supports Sketchapp new plugin update system (appcast)
+- 
 
 ## Concept & Instructions
 
@@ -30,7 +30,7 @@ _Note: Make sure to check for update once in a while (e.g., monthly)_
 - You can export all the stories and layers with `cmd ctrl E`
 - **NEW IN 0.9.2: Passthrough stories** Layers starting with `>>` (passthrough story) are skipped in favor of their first child, but are still part of their peer stories cycle. (this allows to have some base elements for a group of nested stories). See [sketch-storyboard-demo.sketch](http://files.britesnow.com/sketch-storyboard/sketch-storyboard-demo.sketch)
 	- Current *grouped story* limitation: Currently annotation directly below a grouped story will be ignored. Ideally, they should still be exported. 
-- **NEW IN 0.9.2 - appcast support** Supports the new sketchapp appcast model, so you can update the plugin directly from sketch.
+- **NEW IN 0.9.2 - Support Sketch plugin update system**.
 	
 
 	- Simple 
