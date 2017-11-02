@@ -4,8 +4,8 @@
 # Distribution folder
 dist/
 
-dev/
+# Ignore personal files
+~*
 
-# Ignore sublime text files
-*.sublime-project
-*.sublime-workspace
+# Ignore VSCode
+*.vscode

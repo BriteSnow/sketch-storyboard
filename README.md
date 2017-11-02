@@ -21,10 +21,19 @@ _Note: Make sure to check for update once in a while (e.g., monthly)_
 
  This plugins allows your to "flag" some layers as story layers, annotation layers, so that you can flip through them easily. 
 
+## Features: 
+
 - To make a **layer** a **Story Layer** just prefix it with `>` (i.e. `>my first story layer`)
 - Then, you will be able to loop through **Story Layers** with `Plugins > Storyboard > Next Story` or press `cmd ctrl N`
 - You can also add make **layer** an **Annotation Layer** by just naming it in between `()` (i.e. `(my annotation)` )
 - Then, you can loop through the **Story Layers** and their **Annotation Layers** with `Plugins > Storyboard > Next Step` *(cmd ctrl shift N)*
+- You can export all the stories and layers with `cmd ctrl E`
+- **NEW IN 0.9.2: Passthrough stories** Layers starting with `>>` (passthrough story) are skipped in favor of their first child, but are still part of their peer stories cycle. (this allows to have some base elements for a group of nested stories). See [sketch-storyboard-demo.sketch](http://files.britesnow.com/sketch-storyboard/sketch-storyboard-demo.sketch)
+	- Current *grouped story* limitation: Currently annotation directly below a grouped story will be ignored. Ideally, they should still be exported. 
+- **NEW IN 0.9.2 - appcast support** Supports the new sketchapp appcast model, so you can update the plugin directly from sketch.
+	
+
+	- Simple 
 
 ## Example
 

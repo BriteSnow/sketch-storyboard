@@ -1,16 +1,16 @@
 @import 'utils.js'; // eslint-disable-line
 
 
-function onRun(context){
+function onRun(context) {
 	prevStep(context);
 }
 
-function prevStep(context){
-	var currentArtboard = getCurrentArtboard(context);	
+function prevStep(context) {
+	var currentArtboard = getCurrentArtboard(context);
 	var doc = context.document;
 
 	// if no artboard, just show and return
-	if (currentArtboard === null){
+	if (currentArtboard === null) {
 		doc.showMessage("No Artboard selected, please, select one");
 		return;
 	}
@@ -18,28 +18,32 @@ function prevStep(context){
 	var storyboard = new Storyboard(currentArtboard);
 	storyboard.init();
 
-	var firstVisibleStory = storyboard.findFirstVisibleStory();	
+	var firstVisibleStory = storyboard.findFirstVisibleStory();
 
 	// first check if we need to loop through overlays
-	if (firstVisibleStory && firstVisibleStory.hasOverlays()){
+	if (firstVisibleStory && firstVisibleStory.hasOverlays()) {
 		var overlayIdx = firstVisibleStory.getFirstVisibleOverlayIndex();
-		// if no overlay, put it at the end (+1)
-		// if (overlayIdx === -1){
-		// 	overlayIdx = firstVisibleStory.overlays.length;
-		// }
+
 		// if we are on the first overlayIdx, we hide overlays, and stop there
-		if (overlayIdx == 0){
+		if (overlayIdx == 0) {
 			firstVisibleStory.hideAllOverlays();
-			return;
+			// if this firstVisibleStory is not a passthrough, we stop here
+			if (!firstVisibleStory.isPassthrough()) {
+				return;
+			}
+			// if we are here, then, the code below will execute to skip this story passthrough 
 		}
 		// otherwise, we have an overlayIdx > 0, then, we go back one
-		else if (overlayIdx != -1){
+		else if (overlayIdx != -1) {
 			firstVisibleStory.hideAllOverlaysBut(overlayIdx - 1);
 			return;
 		}
 	}
 
-	// if we get here, need to show the pref story
-	var idx = (firstVisibleStory != null && !firstVisibleStory.isArtboard())?firstVisibleStory.idx:storyboard.stories.length
-	storyboard.makePrevStoryVisible(idx, true);
+	// if we get here, need to show the prev story
+	var idx = (firstVisibleStory != null && !firstVisibleStory.isArtboard()) ? firstVisibleStory.idx : storyboard.stories.length
+	const prevStoryIdx = storyboard.makePrevStoryVisible(idx, true, true);
+
+
+
 }

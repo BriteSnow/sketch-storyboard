@@ -1,25 +1,24 @@
 @import 'utils.js'; // eslint-disable-line
 
 
-function onRun(context){
+function onRun(context) {
 	nextStory(context);
 }
 
-function nextStory(context){
-	var currentArtboard = getCurrentArtboard(context);	
+function nextStory(context) {
+	var currentArtboard = getCurrentArtboard(context);
 	var doc = context.document;
 
 	// if no artboard, just show and return
-	if (currentArtboard === null){
+	if (currentArtboard === null) {
 		doc.showMessage("No Artboard selected, please, select one");
 		return;
 	}
 
-	var storyboard = new Storyboard(currentArtboard);
-	storyboard.init();
+	var storyboard = new Storyboard(currentArtboard).init();
 
 	var firstVisibleStory = storyboard.findFirstVisibleStory();
-	var idx = (firstVisibleStory != null)?firstVisibleStory.idx:-1
+	var idx = (firstVisibleStory != null) ? firstVisibleStory.idx : -1
 
 	storyboard.makeNextStoryVisible(idx);
 }
